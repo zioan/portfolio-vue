@@ -40,27 +40,27 @@
           <div class="hidden md:flex items-center space-x-1">
             <router-link
               class="py-5 px-3 text-gray-700 hover:text-gray-900"
-              to="/"
+              :to="{ name: 'Home', params: { locale: this.$i18n.locale } }"
               >{{ $t("menu.home") }}</router-link
             >
             <router-link
               class="py-5 px-3 text-gray-700 hover:text-gray-900"
-              to="/about"
+              :to="{ name: 'About', params: { locale: this.$i18n.locale } }"
               >{{ $t("menu.about") }}</router-link
             >
             <router-link
               class="py-5 px-3 text-gray-700 hover:text-gray-900"
-              to="/resume"
+              :to="{ name: 'Resume', params: { locale: this.$i18n.locale } }"
               >{{ $t("menu.resume") }}</router-link
             >
             <router-link
               class="py-5 px-3 text-gray-700 hover:text-gray-900"
-              to="/portfolio"
+              :to="{ name: 'Portfolio', params: { locale: this.$i18n.locale } }"
               >{{ $t("menu.portfolio") }}</router-link
             >
             <router-link
               class="py-5 px-3 text-gray-700 hover:text-gray-900"
-              to="/contact"
+              :to="{ name: 'Contact', params: { locale: this.$i18n.locale } }"
               >{{ $t("menu.contact") }}</router-link
             >
           </div>
@@ -68,22 +68,26 @@
 
         <!-- secondary nav -->
         <div class="hidden md:flex items-center space-x-1">
+          <LocalSwitcher />
           <a
             href="#"
             class="py-5 px-3"
-            @click.prevent="
-              this.$i18n.locale = this.$i18n.locale === 'de' ? 'en' : 'de'
+            @click="
+              this.$i18n.locale = this.$i18n.locale === 'de' ? 'en' : 'de';
+              pushPath;
             "
             >{{ currentLocale }}</a
           >
         </div>
 
         <!-- mobile button goes here -->
+        <LocalSwitcher />
         <a
           href="#"
           class="py-5 px-3 md:hidden"
-          @click.prevent="
-            this.$i18n.locale = this.$i18n.locale === 'de' ? 'en' : 'de'
+          @click="
+            this.$i18n.locale = this.$i18n.locale === 'de' ? 'en' : 'de';
+            pushPath;
           "
           >{{ currentLocale }}</a
         >
@@ -110,27 +114,29 @@
 
     <!-- mobile menu -->
     <div class="mobile-menu hidden md:hidden">
-      <router-link class="block py-2 px-4 text-sm hover:bg-gray-200" to="/">{{
-        $t("menu.home")
-      }}</router-link>
       <router-link
         class="block py-2 px-4 text-sm hover:bg-gray-200"
-        to="/about"
+        :to="{ name: 'Home', params: { locale: this.$i18n.locale } }"
+        >{{ $t("menu.home") }}</router-link
+      >
+      <router-link
+        class="block py-2 px-4 text-sm hover:bg-gray-200"
+        :to="{ name: 'About', params: { locale: this.$i18n.locale } }"
         >{{ $t("menu.about") }}</router-link
       >
       <router-link
         class="block py-2 px-4 text-sm hover:bg-gray-200"
-        to="/resume"
+        :to="{ name: 'Resume', params: { locale: this.$i18n.locale } }"
         >{{ $t("menu.resume") }}</router-link
       >
       <router-link
         class="block py-2 px-4 text-sm hover:bg-gray-200"
-        to="/portfolio"
+        :to="{ name: 'Portfolio', params: { locale: this.$i18n.locale } }"
         >{{ $t("menu.portfolio") }}</router-link
       >
       <router-link
         class="block py-2 px-4 text-sm hover:bg-gray-200"
-        to="/contact"
+        :to="{ name: 'Contact', params: { locale: this.$i18n.locale } }"
         >{{ $t("menu.contact") }}</router-link
       >
     </div>
@@ -141,11 +147,33 @@
 </template>
 
 <script>
+import LocalSwitcher from "./LocaleSwitcher.vue";
 export default {
   name: "Nav",
+  components: {
+    LocalSwitcher,
+  },
+  language: null,
+  // mounted() {
+  //   if (localStorage.language) {
+  //     this.language = localStorage.language;
+  //   }
+  // },
+  // watch: {
+  //   language(de) {
+  //     localStorage.language = de;
+  //   }
+  // },
+  methods: {
+    pushPath() {
+      const to = this.$router.resolve({ params: this.$i18n.locale });
+      this.$router.push(to.location);
+    },
+  },
   computed: {
     currentLocale() {
-      return this.$i18n.locale === "de" ? "Deutsch" : "English";
+      localStorage.setItem("language", this.$i18n.locale);
+      return localStorage.getItem("language") === "de" ? "Deutsch" : "English";
     },
   },
 };

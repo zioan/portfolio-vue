@@ -1,5 +1,7 @@
 # portfolio-vue
 
+#New portfolio website with Vue and Tailwind
+
 ## Project setup
 ```
 npm install

@@ -1,4 +1,8 @@
 {
+  "home": {
+    "content": "Ich bin ein Webentwickler. Zu meinen Aufgaben gehört die Entwicklung, Weiterentwicklung und Implementierung von Websites. Meine Tätigkeit als Webentwickler ist schwerpunktmäßig die Programmierung. Mein Handwerkszeug ist der sichere Umgang mit Programmier- oder Skriptsprachen wie beispielsweise JavaScript und es kommen häufig Frontend-Technologien wie zum Beispiel HTML5 zum Einsatz.",
+    "title": "Herzlich Willkommen Mein Name ist Ioan Zaharia"
+  },
   "menu": {
     "about": "ÜBER MICH",
     "contact": "KONTAKT",

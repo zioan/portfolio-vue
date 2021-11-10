@@ -1,4 +1,8 @@
 {
+  "home": {
+    "content": "I am a web developer. My tasks include further development and implementation of websites. My work as a web developer is mainly programming. My tools of trade are the safe handling of programming or script languages such as JavaScript, and front-end technologies such as HTML5.",
+    "title": "Welcome My name is Ioan Zaharia"
+  },
   "menu": {
     "about": "ABOUT",
     "contact": "CONTACT",

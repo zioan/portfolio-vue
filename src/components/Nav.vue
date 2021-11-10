@@ -68,28 +68,17 @@
 
         <!-- secondary nav -->
         <div class="hidden md:flex items-center space-x-1">
-          <LocalSwitcher />
-          <a
-            href="#"
-            class="py-5 px-3"
-            @click="
-              this.$i18n.locale = this.$i18n.locale === 'de' ? 'en' : 'de';
-              pushPath;
-            "
-            >{{ currentLocale }}</a
-          >
+          <a href="#" class="py-5 px-3" @click.prevent="changeLanguage">{{
+            languageSelector
+          }}</a>
         </div>
 
         <!-- mobile button goes here -->
-        <LocalSwitcher />
         <a
           href="#"
           class="py-5 px-3 md:hidden"
-          @click="
-            this.$i18n.locale = this.$i18n.locale === 'de' ? 'en' : 'de';
-            pushPath;
-          "
-          >{{ currentLocale }}</a
+          @click.prevent="changeLanguage"
+          >{{ languageSelector }}</a
         >
         <div class="md:hidden flex items-center">
           <button class="mobile-menu-button">
@@ -147,33 +136,25 @@
 </template>
 
 <script>
-import LocalSwitcher from "./LocaleSwitcher.vue";
 export default {
   name: "Nav",
-  components: {
-    LocalSwitcher,
-  },
+  components: {},
   language: null,
-  // mounted() {
-  //   if (localStorage.language) {
-  //     this.language = localStorage.language;
-  //   }
-  // },
-  // watch: {
-  //   language(de) {
-  //     localStorage.language = de;
-  //   }
-  // },
+
   methods: {
-    pushPath() {
-      const to = this.$router.resolve({ params: this.$i18n.locale });
-      this.$router.push(to.location);
+    changeLanguage() {
+      this.$i18n.locale = this.$i18n.locale === "de" ? "en" : "de";
+      if (this.$i18n.locale) {
+        localStorage.setItem("language", this.$i18n.locale);
+        const locale = localStorage.getItem("language");
+        const to = this.$router.resolve({ params: { locale } });
+        this.$router.push(to);
+      }
     },
   },
   computed: {
-    currentLocale() {
-      localStorage.setItem("language", this.$i18n.locale);
-      return localStorage.getItem("language") === "de" ? "Deutsch" : "English";
+    languageSelector() {
+      return this.$i18n.locale === "de" ? "Deutsch" : "English";
     },
   },
 };

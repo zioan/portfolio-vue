@@ -7,19 +7,11 @@ import Contact from "../views/Contact.vue";
 
 import i18n from "../i18n.js";
 
-console.log(i18n.global.locale);
-
-// const setLanguage = i18n.global.locale === "en" ? "/uber" : "/about2";
-
-console.log(i18n.global.locale);
-
-// function load(component) {
-//   // '@' is aliased to src/components
-//   return () => import(`@/views/${component}.vue`);
-// }
+// console.log(i18n.global.locale);
 
 const routes = [
   {
+    // path: i18n.global.locale === "de" ? "/:locale" : "/",
     path: "/:locale",
     component: {
       template: "<router-view></router-view>",
@@ -27,7 +19,6 @@ const routes = [
     beforeEnter: (to, from, next) => {
       const locale = to.params.locale;
       const supported_locales = ["en", "de"];
-      // process.env.VUE_APP_I18N_SUPPORTED_LOCALE.split(",");
 
       if (!supported_locales.includes(locale)) return next("en");
       if (i18n.global.locale !== locale) {
@@ -64,13 +55,12 @@ const routes = [
       },
     ],
   },
-  // {
-  //   path: "*",
-  //   redirect() {
-  //     // return process.env.VUE_APP_I18N_SUPPORTED_LOCALE;
-  //     return "en";
-  //   },
-  // },
+  {
+    path: "/:catchAll(.*)",
+    redirect() {
+      return "en";
+    },
+  },
 ];
 // const routes = [
 //   {
